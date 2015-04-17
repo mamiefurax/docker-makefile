@@ -45,22 +45,19 @@ ADD_SSH_ACCESS_COMMAND = \
 AUTHORIZE_HOME_DIR_COMMAND = chown -R $(CONTAINER_USERNAME):$(CONTAINER_GROUPNAME) $(HOMEDIR) &&
 EXECUTE_AS = sudo -u $(CONTAINER_USERNAME)
 
-container:
-  @docker build -t docker-php-toolbox .
-
 composer:
   @mkdir --parent $(COMPOSER_CACHE_DIR)
   @docker run -ti \
     -w /app \
     -v `pwd`:/app \
     -v $(COMPOSER_CACHE_DIR):$(HOMEDIR)/.composer \
-    docker-php-toolbox bash -c '\
+    mamiefurax/docker-php-toolbox bash -c '\
         $(CREATE_USER_COMMAND) \
         $(ADD_SSH_ACCESS_COMMAND) \
         $(AUTHORIZE_HOME_DIR_COMMAND) \ 
         $(EXECUTE_AS) /composer $(ARGS)'
 
-run:
+server:
   @docker run -d -ti --rm -p 9000:8000 \
     -w /app \
     -v `pwd`:/app \
@@ -71,7 +68,7 @@ phpunit:
   @docker run -ti --rm \
     -w /app \
     -v `pwd`:/app \
-    docker-php-toolbox bash -c '\
+    mamiefurax/docker-php-toolbox bash -c '\
     $(CREATE_USER_COMMAND) \
     $(EXECUTE_AS) /phpunit $(ARGS)'
 
@@ -79,6 +76,62 @@ behat:
   @docker run -ti --rm \
     -w /app \
     -v `pwd`:/app \
-    docker-php-toolbox bash -c '\
+    mamiefurax/docker-php-toolbox bash -c '\
     $(CREATE_USER_COMMAND) \
     $(EXECUTE_AS) /behat $(ARGS)'
+
+phpcs:
+  @docker run -ti --rm \
+    -w /app \
+    -v `pwd`:/app \
+    mamiefurax/docker-php-toolbox bash -c '\
+    $(CREATE_USER_COMMAND) \
+    $(EXECUTE_AS) /phpcs $(ARGS)'
+
+php:
+  @docker run -ti --rm \
+    -w /app \
+    -v `pwd`:/app \
+    mamiefurax/docker-php-toolbox bash -c '\
+    $(CREATE_USER_COMMAND) \
+    $(EXECUTE_AS) php $(ARGS)'
+
+symfony-cacheclear:
+  @docker run -ti --rm \
+    -w /app \
+    -v `pwd`:/app \
+    mamiefurax/docker-php-toolbox bash -c '\
+    $(CREATE_USER_COMMAND) \
+    $(EXECUTE_AS) php app/console cache-clear $(ARGS)'
+
+npm:
+  @docker run -ti --rm \
+    -w /app \
+    -v `pwd`:/app \
+    mamiefurax/docker-webdev-toolbox bash -c '\
+    $(CREATE_USER_COMMAND) \
+    $(EXECUTE_AS) npm $(ARGS)'
+
+grunt:
+  @docker run -ti --rm \
+    -w /app \
+    -v `pwd`:/app \
+    mamiefurax/docker-webdev-toolbox bash -c '\
+    $(CREATE_USER_COMMAND) \
+    $(EXECUTE_AS) grunt $(ARGS)'
+
+bower:
+  @docker run -ti --rm \
+    -w /app \
+    -v `pwd`:/app \
+    mamiefurax/docker-webdev-toolbox bash -c '\
+    $(CREATE_USER_COMMAND) \
+    $(EXECUTE_AS) bower $(ARGS)'
+
+yo:
+  @docker run -ti --rm \
+    -w /app \
+    -v `pwd`:/app \
+    mamiefurax/docker-webdev-toolbox bash -c '\
+    $(CREATE_USER_COMMAND) \
+    $(EXECUTE_AS) yo $(ARGS)'
