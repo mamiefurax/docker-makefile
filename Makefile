@@ -82,6 +82,7 @@ behat:
 		-v `pwd`:/app \
 		mamiefurax/docker-php-toolbox bash -c '\
 		$(CREATE_USER_COMMAND) \
+		$(ADD_SSH_ACCESS_COMMAND) \
 		/behat $(COMMAND_ARGS)'
 
 phpcs:
@@ -98,6 +99,7 @@ php:
 		-v `pwd`:/app \
 		mamiefurax/docker-php-toolbox bash -c '\
 		$(CREATE_USER_COMMAND) \
+		$(ADD_SSH_ACCESS_COMMAND) \
 		php $(COMMAND_ARGS)'
 
 symfony-cacheclear:
@@ -106,6 +108,7 @@ symfony-cacheclear:
 		-v `pwd`:/app \
 		mamiefurax/docker-php-toolbox bash -c '\
 		$(CREATE_USER_COMMAND) \
+		$(ADD_SSH_ACCESS_COMMAND) \
 		php app/console cache-clear $(COMMAND_ARGS)'
 
 npm:
@@ -114,6 +117,7 @@ npm:
 		-v `pwd`:/app \
 		mamiefurax/docker-webdev-toolbox bash -c '\
 		$(CREATE_USER_COMMAND) \
+		$(ADD_SSH_ACCESS_COMMAND) \
 		npm $(COMMAND_ARGS)'
 
 grunt:
@@ -122,6 +126,7 @@ grunt:
 		-v `pwd`:/app \
 		mamiefurax/docker-webdev-toolbox bash -c '\
 		$(CREATE_USER_COMMAND) \
+		$(ADD_SSH_ACCESS_COMMAND) \
 		grunt $(COMMAND_ARGS)'
 
 bower:
@@ -130,6 +135,7 @@ bower:
 		-v `pwd`:/app \
 		mamiefurax/docker-webdev-toolbox bash -c '\
 		$(CREATE_USER_COMMAND) \
+		$(ADD_SSH_ACCESS_COMMAND) \
 		bower $(COMMAND_ARGS)'
 
 yo:
@@ -138,4 +144,5 @@ yo:
 		-v `pwd`:/app \
 		mamiefurax/docker-webdev-toolbox bash -c '\
 		$(CREATE_USER_COMMAND) \
+		$(ADD_SSH_ACCESS_COMMAND) \
 		yo $(COMMAND_ARGS)'
