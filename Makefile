@@ -1,4 +1,4 @@
-.PHONY: composer server phpunit behat phpcs symfony-cacheclear npm bower grunt yo
+.PHONY: composer symfony-server php-server phpunit behat phpcs symfony-cacheclear npm bower grunt yo
 
 #Check platform
 ifeq (Boot2Docker, $(findstring Boot2Docker, $(shell docker info)))
@@ -57,12 +57,19 @@ composer:
 				$(ADD_SSH_ACCESS_COMMAND) \
 				$(EXECUTE_AS) /composer $(COMMAND_ARGS)'
 
-server:
-	@docker run -ti --rm -p 9000:8000 \
+symfony-server:
+	docker run -ti --rm -p 9000:8000 \
 		-w /app \
 		-v `pwd`:/app \
 		docker-php-toolbox \
 		php app/console server:run 0.0.0.0:8000
+
+php-server:
+	docker run -ti --rm -p 9000:8000 \
+		-w /app \
+		-v `pwd`:/app \
+		docker-php-toolbox \
+		php -S 0.0.0.0:8000 $(COMMAND_ARGS)
 
 phpunit:
 	@docker run -ti --rm \
