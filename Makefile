@@ -28,7 +28,7 @@ else
 	CREATE_USER_COMMAND = \
 		groupadd -f -g $(GROUP_ID) $(CONTAINER_GROUPNAME) && \
 		useradd -u $(USER_ID) -g $(CONTAINER_GROUPNAME) $(CONTAINER_USERNAME) && \
-		mkdir --parent $(HOMEDIR) && \
+		mkdir -p $(HOMEDIR) && \
 		chown -R $(CONTAINER_USERNAME):$(CONTAINER_GROUPNAME) $(HOMEDIR) && \
 		sudo -u $(CONTAINER_USERNAME) 
 endif
@@ -38,17 +38,19 @@ DOCKER_SSH_IDENTITY ?= ~/.ssh/id_rsa
 DOCKER_SSH_KNOWN_HOSTS ?= ~/.ssh/known_hosts
 # copy mounted SSH files to the dummy user
 ADD_SSH_ACCESS_COMMAND = \
-	mkdir --parent $(HOMEDIR)/.ssh && \
+	mkdir -p $(HOMEDIR)/.ssh && \
 	test -e /var/tmp/id && cp /var/tmp/id $(HOMEDIR)/.ssh/id_rsa ; \
 	test -e /var/tmp/known_hosts && cp /var/tmp/known_hosts $(HOMEDIR)/.ssh/known_hosts ; \
 	test -e $(HOMEDIR)/.ssh/id_rsa && chmod 600 $(HOMEDIR)/.ssh/id_rsa ;
 
 composer:
-	@mkdir --parent $(COMPOSER_CACHE_DIR)
+	@mkdir -p $(COMPOSER_CACHE_DIR)
 	@docker run -ti \
 		-w /app \
 		-v `pwd`:/app \
 		-v $(COMPOSER_CACHE_DIR):$(HOMEDIR)/.composer \
+		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
+    	-v $(DOCKER_SSH_KNOWN_HOSTS):/var/tmp/known_hosts \
 		mamiefurax/docker-php-toolbox bash -c '\
 				$(CREATE_USER_COMMAND) \
 				$(ADD_SSH_ACCESS_COMMAND) \
@@ -72,6 +74,8 @@ phpunit:
 	@docker run -ti --rm \
 		-w /app \
 		-v `pwd`:/app \
+		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
+    	-v $(DOCKER_SSH_KNOWN_HOSTS):/var/tmp/known_hosts \
 		mamiefurax/docker-php-toolbox bash -c '\
 		$(CREATE_USER_COMMAND) \
 		/phpunit $(COMMAND_ARGS)'
@@ -80,6 +84,8 @@ behat:
 	@docker run -ti --rm \
 		-w /app \
 		-v `pwd`:/app \
+		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
+    	-v $(DOCKER_SSH_KNOWN_HOSTS):/var/tmp/known_hosts \
 		mamiefurax/docker-php-toolbox bash -c '\
 		$(CREATE_USER_COMMAND) \
 		$(ADD_SSH_ACCESS_COMMAND) \
@@ -89,14 +95,19 @@ phpcs:
 	@docker run -ti --rm \
 		-w /app \
 		-v `pwd`:/app \
+		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
+    	-v $(DOCKER_SSH_KNOWN_HOSTS):/var/tmp/known_hosts \
 		mamiefurax/docker-php-toolbox bash -c '\
 		$(CREATE_USER_COMMAND) \
+		$(ADD_SSH_ACCESS_COMMAND) \
 		/phpcs $(COMMAND_ARGS)'
 
 php:
 	@docker run -ti --rm \
 		-w /app \
 		-v `pwd`:/app \
+		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
+    	-v $(DOCKER_SSH_KNOWN_HOSTS):/var/tmp/known_hosts \
 		mamiefurax/docker-php-toolbox bash -c '\
 		$(CREATE_USER_COMMAND) \
 		$(ADD_SSH_ACCESS_COMMAND) \
@@ -106,6 +117,8 @@ symfony-cacheclear:
 	@docker run -ti --rm \
 		-w /app \
 		-v `pwd`:/app \
+		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
+    	-v $(DOCKER_SSH_KNOWN_HOSTS):/var/tmp/known_hosts \
 		mamiefurax/docker-php-toolbox bash -c '\
 		$(CREATE_USER_COMMAND) \
 		$(ADD_SSH_ACCESS_COMMAND) \
@@ -115,6 +128,8 @@ npm:
 	@docker run -ti --rm \
 		-w /app \
 		-v `pwd`:/app \
+		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
+    	-v $(DOCKER_SSH_KNOWN_HOSTS):/var/tmp/known_hosts \
 		mamiefurax/docker-webdev-toolbox bash -c '\
 		$(CREATE_USER_COMMAND) \
 		$(ADD_SSH_ACCESS_COMMAND) \
@@ -124,6 +139,8 @@ grunt:
 	@docker run -ti --rm \
 		-w /app \
 		-v `pwd`:/app \
+		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
+    	-v $(DOCKER_SSH_KNOWN_HOSTS):/var/tmp/known_hosts \
 		mamiefurax/docker-webdev-toolbox bash -c '\
 		$(CREATE_USER_COMMAND) \
 		$(ADD_SSH_ACCESS_COMMAND) \
@@ -133,6 +150,8 @@ bower:
 	@docker run -ti --rm \
 		-w /app \
 		-v `pwd`:/app \
+		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
+    	-v $(DOCKER_SSH_KNOWN_HOSTS):/var/tmp/known_hosts \
 		mamiefurax/docker-webdev-toolbox bash -c '\
 		$(CREATE_USER_COMMAND) \
 		$(ADD_SSH_ACCESS_COMMAND) \
@@ -142,6 +161,8 @@ yo:
 	@docker run -ti --rm \
 		-w /app \
 		-v `pwd`:/app \
+		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
+    	-v $(DOCKER_SSH_KNOWN_HOSTS):/var/tmp/known_hosts \
 		mamiefurax/docker-webdev-toolbox bash -c '\
 		$(CREATE_USER_COMMAND) \
 		$(ADD_SSH_ACCESS_COMMAND) \
