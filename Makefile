@@ -104,6 +104,7 @@ phpcs:
 
 php:
 	@docker run -ti --rm \
+		-p 9000:8000 \
 		-w /app \
 		-v `pwd`:/app \
 		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
