@@ -60,14 +60,14 @@ symfony-server:
 	docker run -ti --rm -p 9000:8000 \
 		-w /app \
 		-v `pwd`:/app \
-		docker-php-toolbox \
+		mamiefurax/docker-php-toolbox \
 		php app/console server:run 0.0.0.0:8000
 
 php-server:
 	docker run -ti --rm -p 9000:8000 \
 		-w /app \
 		-v `pwd`:/app \
-		docker-php-toolbox \
+		mamiefurax/docker-php-toolbox \
 		php -S 0.0.0.0:8000 $(COMMAND_ARGS)
 
 phpunit:
