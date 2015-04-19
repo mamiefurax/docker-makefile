@@ -123,7 +123,7 @@ symfony-cacheclear:
 		mamiefurax/docker-php-toolbox bash -c '\
 		$(CREATE_USER_COMMAND) \
 		$(ADD_SSH_ACCESS_COMMAND) \
-		php app/console cache-clear $(COMMAND_ARGS)'
+		php app/console cache:clear $(COMMAND_ARGS)'
 
 npm:
 	@docker run -ti --rm \
