@@ -1,11 +1,14 @@
 # docker-makefile
 
-*Download the make file using curl
+##Intro
+Thanks to the marmelab article (http://marmelab.com/blog/2014/09/10/make-docker-command.html) I've wrote the following Makefile to easily use my docker toolbox in my projects
+
+###Download the make file using curl
 ```
 curl -o Makefile https://raw.githubusercontent.com/mamiefurax/docker-makefile/master/Makefile
 ```
 
-##Some commands example !
+###Some commands examples !
 
 * launch behat tests :
 ```
