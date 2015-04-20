@@ -10,7 +10,7 @@ endif
 # use first agument as targets and use the rest as arguments for commands arguments
 COMMAND_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
 # ...and turn them into do-nothing targets
-$(eval $(COMMAND_ARGS):;@:)
+#$(eval $(COMMAND_ARGS);@:)
 
 ifeq ($(PLATFORM), OSX)
 	COMPOSER_CACHE_DIR = ~/tmp/composer
@@ -46,7 +46,6 @@ ADD_SSH_ACCESS_COMMAND = \
 composer:
 	@mkdir -p $(COMPOSER_CACHE_DIR)
 	@docker run -ti \
-		-p 9000:8000 \
 		-w /app \
 		-v `pwd`:/app \
 		-v $(COMPOSER_CACHE_DIR):$(HOMEDIR)/.composer \
@@ -58,7 +57,7 @@ composer:
 				/composer.phar $(COMMAND_ARGS)'
 
 symfony-server:
-	docker run -ti --rm \
+	@docker run -ti --rm \
 		-p 9000:8000 \
 		-w /app \
 		-v `pwd`:/app \
@@ -66,7 +65,7 @@ symfony-server:
 		php app/console server:run 0.0.0.0:8000
 
 php-server:
-	docker run -ti --rm \
+	@docker run -ti --rm \
 		-p 9000:8000 \
 		-w /app \
 		-v `pwd`:/app \
@@ -75,7 +74,6 @@ php-server:
 
 phpunit:
 	@docker run -ti --rm \
-		-p 9000:8000 \
 		-w /app \
 		-v `pwd`:/app \
 		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
@@ -86,7 +84,6 @@ phpunit:
 
 behat:
 	@docker run -ti --rm \
-		-p 9000:8000 \
 		-w /app \
 		-v `pwd`:/app \
 		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
@@ -98,7 +95,6 @@ behat:
 
 phpcs:
 	@docker run -ti --rm \
-		-p 9000:8000 \
 		-w /app \
 		-v `pwd`:/app \
 		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
@@ -110,7 +106,6 @@ phpcs:
 
 php-cs-fixer:
 	@docker run -ti --rm \
-		-p 9000:8000 \
 		-w /app \
 		-v `pwd`:/app \
 		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
@@ -122,7 +117,6 @@ php-cs-fixer:
 
 php:
 	@docker run -ti --rm \
-		-p 9000:8000 \
 		-w /app \
 		-v `pwd`:/app \
 		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
@@ -134,7 +128,6 @@ php:
 
 symfony-cacheclear:
 	@docker run -ti --rm \
-		-p 9000:8000 \
 		-w /app \
 		-v `pwd`:/app \
 		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
@@ -146,7 +139,6 @@ symfony-cacheclear:
 
 npm:
 	@docker run -ti --rm \
-		-p 9000:8000 \
 		-w /app \
 		-v `pwd`:/app \
 		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
@@ -169,7 +161,6 @@ grunt:
 
 bower:
 	@docker run -ti --rm \
-		-p 9000:8000 \
 		-w /app \
 		-v `pwd`:/app \
 		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
@@ -181,7 +172,6 @@ bower:
 
 yo:
 	@docker run -ti --rm \
-		-p 9000:8000 \
 		-w /app \
 		-v `pwd`:/app \
 		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
@@ -190,3 +180,6 @@ yo:
 		$(CREATE_USER_COMMAND) \
 		$(ADD_SSH_ACCESS_COMMAND) \
 		yo $(COMMAND_ARGS)'
+
+%: 
+	@:
