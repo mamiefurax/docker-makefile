@@ -46,61 +46,79 @@ ADD_SSH_ACCESS_COMMAND = \
 composer:
 	@mkdir -p $(COMPOSER_CACHE_DIR)
 	@docker run -ti \
+		-p 9000:8000 \
 		-w /app \
 		-v `pwd`:/app \
 		-v $(COMPOSER_CACHE_DIR):$(HOMEDIR)/.composer \
 		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
     	-v $(DOCKER_SSH_KNOWN_HOSTS):/var/tmp/known_hosts \
-		mamiefurax/docker-php-toolbox bash -c '\
+		mamiefurax/docker-php-toolbox:latest bash -c '\
 				$(CREATE_USER_COMMAND) \
 				$(ADD_SSH_ACCESS_COMMAND) \
-				/composer $(COMMAND_ARGS)'
+				/composer.phar $(COMMAND_ARGS)'
 
 symfony-server:
-	docker run -ti --rm -p 9000:8000 \
+	docker run -ti --rm \
+		-p 9000:8000 \
 		-w /app \
 		-v `pwd`:/app \
-		mamiefurax/docker-php-toolbox \
+		mamiefurax/docker-php-toolbox:latest \
 		php app/console server:run 0.0.0.0:8000
 
 php-server:
-	docker run -ti --rm -p 9000:8000 \
+	docker run -ti --rm \
+		-p 9000:8000 \
 		-w /app \
 		-v `pwd`:/app \
-		mamiefurax/docker-php-toolbox \
+		mamiefurax/docker-php-toolbox:latest \
 		php -S 0.0.0.0:8000 $(COMMAND_ARGS)
 
 phpunit:
 	@docker run -ti --rm \
+		-p 9000:8000 \
 		-w /app \
 		-v `pwd`:/app \
 		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
     	-v $(DOCKER_SSH_KNOWN_HOSTS):/var/tmp/known_hosts \
-		mamiefurax/docker-php-toolbox bash -c '\
+		mamiefurax/docker-php-toolbox:latest bash -c '\
 		$(CREATE_USER_COMMAND) \
-		/phpunit $(COMMAND_ARGS)'
+		/phpunit.phar $(COMMAND_ARGS)'
 
 behat:
 	@docker run -ti --rm \
+		-p 9000:8000 \
 		-w /app \
 		-v `pwd`:/app \
 		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
     	-v $(DOCKER_SSH_KNOWN_HOSTS):/var/tmp/known_hosts \
-		mamiefurax/docker-php-toolbox bash -c '\
+		mamiefurax/docker-php-toolbox:latest bash -c '\
 		$(CREATE_USER_COMMAND) \
 		$(ADD_SSH_ACCESS_COMMAND) \
-		/behat $(COMMAND_ARGS)'
+		/behat.phar $(COMMAND_ARGS)'
 
 phpcs:
 	@docker run -ti --rm \
+		-p 9000:8000 \
 		-w /app \
 		-v `pwd`:/app \
 		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
     	-v $(DOCKER_SSH_KNOWN_HOSTS):/var/tmp/known_hosts \
-		mamiefurax/docker-php-toolbox bash -c '\
+		mamiefurax/docker-php-toolbox:latest bash -c '\
 		$(CREATE_USER_COMMAND) \
 		$(ADD_SSH_ACCESS_COMMAND) \
-		/phpcs $(COMMAND_ARGS)'
+		/phpcs.phar $(COMMAND_ARGS)'
+
+php-cs-fixer:
+	@docker run -ti --rm \
+		-p 9000:8000 \
+		-w /app \
+		-v `pwd`:/app \
+		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
+    	-v $(DOCKER_SSH_KNOWN_HOSTS):/var/tmp/known_hosts \
+		mamiefurax/docker-php-toolbox:latest bash -c '\
+		$(CREATE_USER_COMMAND) \
+		$(ADD_SSH_ACCESS_COMMAND) \
+		/php-cs-fixer.phar $(COMMAND_ARGS)'
 
 php:
 	@docker run -ti --rm \
@@ -109,29 +127,31 @@ php:
 		-v `pwd`:/app \
 		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
     	-v $(DOCKER_SSH_KNOWN_HOSTS):/var/tmp/known_hosts \
-		mamiefurax/docker-php-toolbox bash -c '\
+		mamiefurax/docker-php-toolbox:latest bash -c '\
 		$(CREATE_USER_COMMAND) \
 		$(ADD_SSH_ACCESS_COMMAND) \
 		php $(COMMAND_ARGS)'
 
 symfony-cacheclear:
 	@docker run -ti --rm \
+		-p 9000:8000 \
 		-w /app \
 		-v `pwd`:/app \
 		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
     	-v $(DOCKER_SSH_KNOWN_HOSTS):/var/tmp/known_hosts \
-		mamiefurax/docker-php-toolbox bash -c '\
+		mamiefurax/docker-php-toolbox:latest bash -c '\
 		$(CREATE_USER_COMMAND) \
 		$(ADD_SSH_ACCESS_COMMAND) \
 		php app/console cache:clear $(COMMAND_ARGS)'
 
 npm:
 	@docker run -ti --rm \
+		-p 9000:8000 \
 		-w /app \
 		-v `pwd`:/app \
 		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
     	-v $(DOCKER_SSH_KNOWN_HOSTS):/var/tmp/known_hosts \
-		mamiefurax/docker-webdev-toolbox bash -c '\
+		mamiefurax/docker-webdev-toolbox:latest bash -c '\
 		$(CREATE_USER_COMMAND) \
 		$(ADD_SSH_ACCESS_COMMAND) \
 		npm $(COMMAND_ARGS)'
@@ -142,29 +162,31 @@ grunt:
 		-v `pwd`:/app \
 		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
     	-v $(DOCKER_SSH_KNOWN_HOSTS):/var/tmp/known_hosts \
-		mamiefurax/docker-webdev-toolbox bash -c '\
+		mamiefurax/docker-webdev-toolbox:latest bash -c '\
 		$(CREATE_USER_COMMAND) \
 		$(ADD_SSH_ACCESS_COMMAND) \
 		grunt $(COMMAND_ARGS)'
 
 bower:
 	@docker run -ti --rm \
+		-p 9000:8000 \
 		-w /app \
 		-v `pwd`:/app \
 		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
     	-v $(DOCKER_SSH_KNOWN_HOSTS):/var/tmp/known_hosts \
-		mamiefurax/docker-webdev-toolbox bash -c '\
+		mamiefurax/docker-webdev-toolbox:latest bash -c '\
 		$(CREATE_USER_COMMAND) \
 		$(ADD_SSH_ACCESS_COMMAND) \
 		bower $(COMMAND_ARGS)'
 
 yo:
 	@docker run -ti --rm \
+		-p 9000:8000 \
 		-w /app \
 		-v `pwd`:/app \
 		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
     	-v $(DOCKER_SSH_KNOWN_HOSTS):/var/tmp/known_hosts \
-		mamiefurax/docker-webdev-toolbox bash -c '\
+		mamiefurax/docker-webdev-toolbox:latest bash -c '\
 		$(CREATE_USER_COMMAND) \
 		$(ADD_SSH_ACCESS_COMMAND) \
 		yo $(COMMAND_ARGS)'
