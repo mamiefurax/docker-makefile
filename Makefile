@@ -119,6 +119,7 @@ php-cs-fixer:
 
 php:
 	@docker run -ti --rm \
+		$(PORT_BINDING) \
 		-w /app \
 		-v `pwd`:/app \
 		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
@@ -155,6 +156,7 @@ npm:
 
 grunt:
 	@docker run -ti --rm \
+		$(PORT_BINDING) \
 		-w /app \
 		-v `pwd`:/app \
 		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
