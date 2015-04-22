@@ -66,16 +66,20 @@ symfony-server:
 		-p 9000:8000 \
 		-w /app \
 		-v `pwd`:/app \
-		mamiefurax/docker-php-toolbox:latest \
-		php app/console server:run 0.0.0.0:8000
+		mamiefurax/docker-php-toolbox:latest bash -ci '\
+		$(CREATE_USER_COMMAND) \
+		$(AUTHORIZE_HOME_DIR_COMMAND) \
+		$(EXECUTE_AS) php app/console server:run 0.0.0.0:8000 $(COMMAND_ARGS)'
 
 php-server:
 	@docker run -ti --rm \
 		-p 9000:8000 \
 		-w /app \
 		-v `pwd`:/app \
-		mamiefurax/docker-php-toolbox:latest \
-		php -S 0.0.0.0:8000 $(COMMAND_ARGS)
+		mamiefurax/docker-php-toolbox:latest bash -ci ' \
+		$(CREATE_USER_COMMAND) \
+		$(AUTHORIZE_HOME_DIR_COMMAND) \
+		$(EXECUTE_AS) php -S 0.0.0.0:8000 $(COMMAND_ARGS)'
 
 phpunit:
 	@docker run -ti --rm \
