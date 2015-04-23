@@ -130,8 +130,8 @@ php:
     	-v $(DOCKER_SSH_KNOWN_HOSTS):/var/tmp/known_hosts \
 		mamiefurax/docker-php-toolbox:latest bash -ci '\
 			$(CREATE_USER_COMMAND) \
-			$(AUTHORIZE_HOME_DIR_COMMAND) \
 			$(ADD_SSH_ACCESS_COMMAND) \
+			$(AUTHORIZE_HOME_DIR_COMMAND) \
 			$(EXECUTE_AS) php $(COMMAND_ARGS)'
 
 symfony-cacheclear:
@@ -142,8 +142,8 @@ symfony-cacheclear:
     	-v $(DOCKER_SSH_KNOWN_HOSTS):/var/tmp/known_hosts \
 		mamiefurax/docker-php-toolbox:latest bash -ci '\
 			$(CREATE_USER_COMMAND) \
-			$(AUTHORIZE_HOME_DIR_COMMAND) \
 			$(ADD_SSH_ACCESS_COMMAND) \
+			$(AUTHORIZE_HOME_DIR_COMMAND) \
 			$(EXECUTE_AS) php app/console cache:clear $(COMMAND_ARGS)'
 
 npm:
@@ -154,8 +154,8 @@ npm:
     	-v $(DOCKER_SSH_KNOWN_HOSTS):/var/tmp/known_hosts \
 		mamiefurax/docker-webdev-toolbox:latest bash -ci '\
 			$(CREATE_USER_COMMAND) \
-			$(AUTHORIZE_HOME_DIR_COMMAND) \
 			$(ADD_SSH_ACCESS_COMMAND) \
+			$(AUTHORIZE_HOME_DIR_COMMAND) \
 			$(EXECUTE_AS) npm $(COMMAND_ARGS)'
 
 grunt:
@@ -167,8 +167,8 @@ grunt:
     	-v $(DOCKER_SSH_KNOWN_HOSTS):/var/tmp/known_hosts \
 		mamiefurax/docker-webdev-toolbox:latest bash -ci '\
 			$(CREATE_USER_COMMAND) \
-			$(AUTHORIZE_HOME_DIR_COMMAND) \
 			$(ADD_SSH_ACCESS_COMMAND) \
+			$(AUTHORIZE_HOME_DIR_COMMAND) \
 			$(EXECUTE_AS) grunt $(COMMAND_ARGS)'
 
 bower:
@@ -180,8 +180,8 @@ bower:
     	-v $(DOCKER_SSH_KNOWN_HOSTS):/var/tmp/known_hosts \
 		mamiefurax/docker-webdev-toolbox:latest bash -ci '\
 			$(CREATE_USER_COMMAND) \
-			$(AUTHORIZE_HOME_DIR_COMMAND) \
 			$(ADD_SSH_ACCESS_COMMAND) \
+			$(AUTHORIZE_HOME_DIR_COMMAND) \
 			$(EXECUTE_AS) bower --allow-root \
 			--config.interactive=false \
 			--config.storage.cache=$(HOMEDIR)/.bower/cache \
@@ -197,8 +197,8 @@ yo:
     	-v $(DOCKER_SSH_KNOWN_HOSTS):/var/tmp/known_hosts \
 		mamiefurax/docker-webdev-toolbox:latest bash -ci '\
 			$(CREATE_USER_COMMAND) \
-			$(AUTHORIZE_HOME_DIR_COMMAND) \
 			$(ADD_SSH_ACCESS_COMMAND) \
+			$(AUTHORIZE_HOME_DIR_COMMAND) \
 			$(EXECUTE_AS) yo $(COMMAND_ARGS)'
 
 %: 
