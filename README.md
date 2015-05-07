@@ -7,10 +7,15 @@ You can find docker toolboxes in docker registry :
 * https://registry.hub.docker.com/u/mamiefurax/docker-php-toolbox/
 * https://registry.hub.docker.com/u/mamiefurax/docker-webdev-toolbox/
 
-###Download the make file using curl
+###Usage
+
+* Download last makefile from this repository in the root of your project
 ```
 curl -o Makefile https://raw.githubusercontent.com/mamiefurax/docker-makefile/master/Makefile
 ```
+
+* And just use it with make commands line above
+
 
 ###Some PHP commands examples !
 
