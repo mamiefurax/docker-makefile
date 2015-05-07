@@ -1,14 +1,18 @@
 # docker-makefile
 
 ##Intro
-Thanks to the marmelab article (http://marmelab.com/blog/2014/09/10/make-docker-command.html) I've wrote the following Makefile to easily use my docker toolbox in my projects
+Thanks to the marmelab article (http://marmelab.com/blog/2014/09/10/make-docker-command.html) I've wrote the following Makefile to easily use my docker toolboxes in my projects
+
+You can find docker toolboxes in docker registry :
+* https://registry.hub.docker.com/u/mamiefurax/docker-php-toolbox/
+* https://registry.hub.docker.com/u/mamiefurax/docker-webdev-toolbox/
 
 ###Download the make file using curl
 ```
 curl -o Makefile https://raw.githubusercontent.com/mamiefurax/docker-makefile/master/Makefile
 ```
 
-###Some commands examples !
+###Some PHP commands examples !
 
 * launch behat tests :
 ```
@@ -50,3 +54,20 @@ $ make -- php -v
 ```
 $ make -- php Tests/app/console server:run 0.0.0.0:1337 PORT_BINDING="-p 5000:1337"
 ``` 
+
+###Some Webdev commands examples !
+
+* Npm install
+```
+$ make -- npm install
+```
+
+* Launch a grunt task
+```
+$ make -- grunt mytask
+```
+
+* Launch bower
+```
+$ make -- bower install
+```
