@@ -27,10 +27,16 @@ $ make -- symfony-cacheclear --env test
 
 * launch phpunit tests :
 ```
-$ make -- phpunit -c Tests/phpunit.xm
+$ make -- phpunit -c Tests/phpunit.xml
 ```
 
-* start a symfony server (it will map container 8000 port to 9000 port on your host so yo can launch your browser on http://localhost:9000)
+or
+
+```
+$ make -- php vendor/bin/phpunit -c Tests/phpunit.xml
+```
+
+* start a symfony server (it will automatically map container port 8000 to port 9000 on your host so yo can launch http://localhost:9000/ in your browser)
 ```
 make symfony-server
 ```
@@ -39,3 +45,8 @@ make symfony-server
 ```
 $ make -- php -v
 ```
+
+* Bind another port in the container (in this example localhost:5000 will hit on port 5000 in the container)
+```
+$ make -- php Tests/app/console server:run 0.0.0.0:1337 PORT_BINDING="-p 5000:1337"
+``` 
