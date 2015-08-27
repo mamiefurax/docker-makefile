@@ -1,10 +1,10 @@
 .PHONY: composer symfony-server php-server phpunit behat phpcs symfony-cacheclear npm bower grunt yo
 
+PLATFORM := Linux
+
 #Check platform
 ifeq (Boot2Docker, $(findstring Boot2Docker, $(shell docker info)))
 	PLATFORM := OSX
-else
-	PLATFORM := Linux
 endif
 
 # use first agument as targets and use the rest as arguments for commands arguments
