@@ -50,8 +50,8 @@ EXECUTE_AS = sudo -u $(CONTAINER_USERNAME) HOME=$(HOMEDIR)
 composer:
 	@mkdir -p $(COMPOSER_CACHE_DIR)
 	@docker run -ti \
-		-w /app \
-		-v `pwd`:/app \
+		-w `pwd` \
+		-v `pwd`:`pwd` \
 		-v $(COMPOSER_CACHE_DIR):$(HOMEDIR)/.composer \
 		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
     	-v $(DOCKER_SSH_KNOWN_HOSTS):/var/tmp/known_hosts \
@@ -64,8 +64,8 @@ composer:
 symfony-server:
 	@docker run -ti --rm \
 		-p 9000:8000 \
-		-w /app \
-		-v `pwd`:/app \
+		-w `pwd` \
+		-v `pwd`:`pwd` \
 		mamiefurax/docker-php-toolbox:latest bash -ci '\
 		$(CREATE_USER_COMMAND) \
 		$(AUTHORIZE_HOME_DIR_COMMAND) \
@@ -74,8 +74,8 @@ symfony-server:
 php-server:
 	@docker run -ti --rm \
 		-p 9000:8000 \
-		-w /app \
-		-v `pwd`:/app \
+		-w `pwd` \
+		-v `pwd`:`pwd` \
 		mamiefurax/docker-php-toolbox:latest bash -ci ' \
 		$(CREATE_USER_COMMAND) \
 		$(AUTHORIZE_HOME_DIR_COMMAND) \
@@ -83,8 +83,8 @@ php-server:
 
 phpunit:
 	@docker run -ti --rm \
-		-w /app \
-		-v `pwd`:/app \
+		-w `pwd` \
+		-v `pwd`:`pwd` \
 		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
     	-v $(DOCKER_SSH_KNOWN_HOSTS):/var/tmp/known_hosts \
 		mamiefurax/docker-php-toolbox:latest bash -ci '\
@@ -94,8 +94,8 @@ phpunit:
 
 behat:
 	@docker run -ti --rm \
-		-w /app \
-		-v `pwd`:/app \
+		-w `pwd` \
+		-v `pwd`:`pwd` \
 		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
     	-v $(DOCKER_SSH_KNOWN_HOSTS):/var/tmp/known_hosts \
 		mamiefurax/docker-php-toolbox:latest bash -ci '\
@@ -105,8 +105,8 @@ behat:
 
 phpcs:
 	@docker run -ti --rm \
-		-w /app \
-		-v `pwd`:/app \
+		-w `pwd` \
+		-v `pwd`:`pwd` \
 		mamiefurax/docker-php-toolbox:latest bash -ci '\
 			$(CREATE_USER_COMMAND) \
 			$(AUTHORIZE_HOME_DIR_COMMAND) \
@@ -114,8 +114,8 @@ phpcs:
 
 php-cs-fixer:
 	@docker run -ti --rm \
-		-w /app \
-		-v `pwd`:/app \
+		-w `pwd` \
+		-v `pwd`:`pwd` \
 		mamiefurax/docker-php-toolbox:latest bash -ci '\
 			$(CREATE_USER_COMMAND) \
 			$(AUTHORIZE_HOME_DIR_COMMAND) \
@@ -124,8 +124,8 @@ php-cs-fixer:
 php:
 	@docker run -ti --rm \
 		$(PORT_BINDING) \
-		-w /app \
-		-v `pwd`:/app \
+		-w `pwd` \
+		-v `pwd`:`pwd` \
 		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
     	-v $(DOCKER_SSH_KNOWN_HOSTS):/var/tmp/known_hosts \
 		mamiefurax/docker-php-toolbox:latest bash -ci '\
@@ -136,8 +136,8 @@ php:
 
 symfony-cacheclear:
 	@docker run -ti --rm \
-		-w /app \
-		-v `pwd`:/app \
+		-w `pwd` \
+		-v `pwd`:`pwd` \
 		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
     	-v $(DOCKER_SSH_KNOWN_HOSTS):/var/tmp/known_hosts \
 		mamiefurax/docker-php-toolbox:latest bash -ci '\
@@ -148,8 +148,8 @@ symfony-cacheclear:
 
 npm:
 	@docker run -ti --rm \
-		-w /app \
-		-v `pwd`:/app \
+		-w `pwd` \
+		-v `pwd`:`pwd` \
 		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
     	-v $(DOCKER_SSH_KNOWN_HOSTS):/var/tmp/known_hosts \
 		mamiefurax/docker-webdev-toolbox:latest bash -ci '\
@@ -161,8 +161,8 @@ npm:
 grunt:
 	@docker run -ti --rm \
 		$(PORT_BINDING) \
-		-w /app \
-		-v `pwd`:/app \
+		-w `pwd` \
+		-v `pwd`:`pwd` \
 		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
     	-v $(DOCKER_SSH_KNOWN_HOSTS):/var/tmp/known_hosts \
 		mamiefurax/docker-webdev-toolbox:latest bash -ci '\
@@ -173,8 +173,8 @@ grunt:
 
 bower:
 	@docker run -ti --rm \
-		-w /app \
-		-v `pwd`:/app \
+		-w `pwd` \
+		-v `pwd`:`pwd` \
 		-v $(BOWER_CACHE_DIR):$(HOMEDIR)/.bower \
 		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
     	-v $(DOCKER_SSH_KNOWN_HOSTS):/var/tmp/known_hosts \
@@ -191,8 +191,8 @@ bower:
 
 yo:
 	@docker run -ti --rm \
-		-w /app \
-		-v `pwd`:/app \
+		-w `pwd` \
+		-v `pwd`:`pwd` \
 		-v $(DOCKER_SSH_IDENTITY):/var/tmp/id \
     	-v $(DOCKER_SSH_KNOWN_HOSTS):/var/tmp/known_hosts \
 		mamiefurax/docker-webdev-toolbox:latest bash -ci '\
